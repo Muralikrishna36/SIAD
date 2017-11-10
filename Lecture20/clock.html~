@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html lang="en" class="gr__isslab-udayton_github_io"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>
+function startTime() {
+    document.getElementById('clock').innerHTML = new Date();
+    setTimeout(startTime, 500);
+}
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function(){
+	//alert("ready state = "+ this.readyState + " status = "+this.status + "statusText = " + this.statusText );
+	if(this.readyState == 4 && this.status==200){
+		alert(xhttp.responseText);
+	}
+}
+xhttp.open("GET" , "clock.html", true);
+xhttp.send();
+
+
+</script>
+
+</head><body onload="startTime()" data-gr-c-s-loaded="true">
+
+Current time: <div id="clock">Mon Jun 19 2017 15:19:25 GMT-0400 (Eastern Daylight Time)</div>
+
+
+</body></html>

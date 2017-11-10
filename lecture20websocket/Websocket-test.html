@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html lang="en" class="gr__isslab-udayton_github_io"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>
+function startTime() {
+    document.getElementById('clock').innerHTML = new Date();
+    setTimeout(startTime, 500);
+}
+function displayHints(str){
+console.log(str);
+
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function(){
+	//alert("ready state = "+ this.readyState + " status = "+this.status + "statusText = " + this.statusText );
+	if(this.readyState == 4 && this.status==200){
+		//alert(xhttp.responseText);
+		document.getElementById('hints').innerHTML = xhttp.responseText;
+	}
+}
+xhttp.open("GET" , "hints.php?q=" + str, true);
+xhttp.send();
+
+}
+if(window.Websocket){
+	console.log("HTML % websocket supported");
+}else{
+	alert("Websocket not supported in your browser");
+}
+var myWebSocket = new WebSocket("ws://echo.websocket.org");
+myWebSocket.onopen = function(){
+	console.log("WebSocket is opened");
+	doSend("hello");
+}
+myWebSocket.onmessage = function(msg){
+	var data = msg.data;
+	console.log("Recieved from server:");
+}
+function doSend(msg){
+   	if(myWebSocket){
+		myWebSocket.send(msg);
+		console.log("sent to server: " + msg);		
+}
+}
+
+</script>
+
+</head><body onload="startTime()" data-gr-c-s-loaded="true">
+
+Current time: <div id="clock">Mon Jun 19 2017 15:19:25 GMT-0400 (Eastern Daylight Time)</div>
+<input type ="text" size = "30" onkeyup="displayHints(this.value)">
+<div id="hints"></div>
+
+</body></html>

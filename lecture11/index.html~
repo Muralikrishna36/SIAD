@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Theme Simply Me</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body onload="startTime()">
+<form action="/cgi-bin/hello.cgi">
+your Name:<input name="name" size="20">
+your username:<input username="name" size="20">
+your password:<input password="name" size="20">
+<input type="submit" value="Submit!">
+</form>
+<div id="mydiv" onclick="document.getElementById('mydiv').innerHTML = Date()">Show Date()</div>
+<script alert("hello from inlinen javascript");></script>
+  <h3>Who Am I?</h3>
+  <img src="bird.jpg" alt="Bird">
+  <h3>I'm an adventurer</h3>
+<script>alert("There is an error loading data")</script>
+<script src="alert.js"> </script>
+<script> 
+function startTime(){
+document.getElementById('clock').innerHTML = new Date;
+setTimeout(startTime,500);
+}
+</script>
+<div id="email" onclick="showhide()">show my email</div>
+<script>
+var show=false;
+function showhide(){
+
+//alert(1);
+
+if(show){
+	document.getElementById('email').innerHTML = "show my email";
+	show =false;
+}else
+{
+var myemail="<a href='mailto:meka"+"@"+"udayton.edu'>meka" + "@" + "udayton.edu</a>";
+alert(myemail);
+document.getElementById('email').innerHTML = myemail;
+show = true;
+}
+}
+</script>
+<div id="clock"></div>
+</body>
+</html>

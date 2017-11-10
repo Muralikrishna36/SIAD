@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html lang="en" class="gr__isslab-udayton_github_io"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>
+function startTime() {
+    document.getElementById('clock').innerHTML = new Date();
+    setTimeout(startTime, 500);
+}
+function displayHints(str){
+console.log(str);
+
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function(){
+	//alert("ready state = "+ this.readyState + " status = "+this.status + "statusText = " + this.statusText );
+	if(this.readyState == 4 && this.status==200){
+		//alert(xhttp.responseText);
+		document.getElementById('hints').innerHTML = xhttp.responseText;
+	}
+}
+xhttp.open("GET" , "hints.php?q=" + str, true);
+xhttp.send();
+
+}
+if(window.WebSocket){
+	console.log("HTML 5 websocket supported");
+}else{
+	alert("Websocket not supported in your browser");
+}
+var myWebSocket = new WebSocket("ws://192.168.56.101:8123");
+myWebSocket.onopen = function(){
+	console.log("WebSocket is opened");
+	var username = prompt("please provide username","");
+	doSend("<JOIN>"+username);
+}
+myWebSocket.onmessage = function(msg){
+	var data = msg.data;
+	console.log("Recieved from server:"+ data);
+	if((data.length>=8)&&(data.substring(0,8)=="<TYPING>")){
+		document.getElementById('typing').innerHTML = data ;
+		setTimeout(function(){document.getElementById('typing').innerHTML = "";},1000);
+	}
+	else if((data.length>=8)&&(data.substring(0,8)=="<URLIST>")){
+	document.getElementById('userlist').innerHTML = data ;
+	}else{
+		document.getElementById('messages').innerHTML += data + "<br>";
+	}
+}
+function doSend(msg){
+   	if(myWebSocket){
+		myWebSocket.send(msg);
+		console.log("sent to server: " + msg);		
+	}
+}
+function send(){
+	var msg= document.getElementById('messageinput').value;
+	doSend("<CHAT>"+msg);
+	var msg = document.getElementById('messageinput').value="";
+}
+function sendTyping(){
+	var msg= document.getElementById('messageinput').value;
+	doSend("<CHAT>"+msg);
+	document.getElementById('messageinput').value="";
+}
+function quit(){
+	if(confirm("Do you want to quit chat?")){
+		doSend("<EXIT>");
+		myWebSocket.close();
+		window.close();
+	}
+}
+</script>
+
+</head>
+<body onload="startTime()" >
+
+Current time: <div id="clock"></div>
+<input type ="text" size = "30" onkeyup="doSend('<TYPE>');" id="messageinput"/><button type="button" onclick="send();">Send</button><br>
+<input type ="hidden" size = "30" id="messageinput"/><button type="button" onclick="quit();">Quit</button><br>
+<div id="typing"></div>
+
+UserList:<br>
+<div id="userlist"></div>
+
+Chat Messages:<br>
+<div id="messages"></div>
+
+</body></html>

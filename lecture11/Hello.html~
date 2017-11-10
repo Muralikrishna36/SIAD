@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Theme Simply Me</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body onload="startTime()">
+<form action="/cgi-bin/Hello.cgi">
+your Name:<input name="name" size="20">
+your username:<input username="name" size="20">
+your password:<input password="password" size="20">
+<input type="submit" value="Submit!">
+</form>
+<script> 
+function startTime(){
+document.getElementById('clock').innerHTML = new Date;
+setTimeout(startTime,500);
+}
+</script>
+<div id="email" onclick="showhide()">show my email</div>
+<script>
+var show=false;
+function showhide(){
+
+//alert(1);
+
+if(show){
+	document.getElementById('email').innerHTML = "show my email";
+	show =false;
+}else
+{
+var myemail="<a href='mailto:meka"+"@"+"udayton.edu'>meka" + "@" + "udayton.edu</a>";
+document.getElementById('email').innerHTML = myemail;
+show = true;
+}
+}
+</script>
+<div id="clock"></div>
+</body>
+</html>

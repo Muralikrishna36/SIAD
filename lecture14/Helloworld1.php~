@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+
+<form action="index.php" method="GET" class="form login" >
+Your username:<input type="text" name="username" size="20">
+Your Password:<input type= "password" name="password" size="20">
+<button class="button" value="submit!">
+</form>
+
+</html>

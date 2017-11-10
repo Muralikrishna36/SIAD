@@ -1,0 +1,9 @@
+var http = require("http");
+var server = http.createServer(function(request,response)){
+	console.log("Got the request:" + request.url);
+	response.write("Hello");
+	response.end();
+});
+var port=8888;
+server.listen(post);
+console.log("Server is running at port: " +port);

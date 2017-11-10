@@ -1,0 +1,57 @@
+<?php
+	
+	$lifetime= 1200;
+	session_set_cookie_params($lifetime);
+	header("refresh:1200;url=logout.php");
+	session_start();
+	$mysqli= new mysqli('localhost', 'SIAD_lab', 'secretpass', 'SIAD_lab7');
+	if($mysqli->connect_error)
+		{
+			die('Connection to the database has an error: ' . $mysqli->connect_error);
+		}
+	
+	function checklogin($username,$password){
+		$sql = "SELECT * FROM users WHERE username='$username' AND password = password('$password');";
+		//echo "sql=$sql<br>";
+		global $mysqli;
+		$result = $mysqli->query($sql);
+		if($result->num_rows>0){
+			return TRUE;
+		}
+        return FALSE;
+    }
+
+	$username = $_POST["username"];
+	$password = $_POST["password"];
+	
+	if(isset($username) and isset($password)){
+		$username=mysql_real_escape_string($_REQUEST["username"]);
+		$password=mysql_real_escape_string($_REQUEST["password"]);
+		if(checklogin($username,$password)){
+			echo "Welcome!<br>";
+			$_SESSION["logged"] = TRUE;
+			$_SESSION["username"] = $username;
+			$_SESSION["browser"] = $_SERVER["HTTP_USER_AGENT"];
+			//echo "<br> \$_SERVER[\"HTTP_USER_AGENT\"] = " . $_SESSION["browser"];
+			$_SESSION["browser1"] = $_SERVER["REMOTE_ADDR"];
+			//echo "<br> \$_SERVER[\"REMOTE_ADDR\"] = " . $_SESSION["browser1"];
+			$_SESSION["browser2"] = $_SERVER["HTTP_ACCEPT"];
+			//echo "<br> \$_SERVER[\"HTTP_ACCEPT\"] = " . $_SESSION["browser2"] ;
+		}else{
+			header("refresh:1; url=login.php");
+			echo "\n Invalid username or password<br>";
+			session_destroy();
+		}
+    	}
+
+    	if(!isset($_SESSION["logged"])){
+		session_destroy();
+		header("refresh:1;url=login.php");
+		echo "<a href='login.php'>Click here to login</a><br>";
+	}
+	if($_SESSION["browser"]!=$_SERVER["HTTP_USER_AGENT"] and $_SESSION["browser1"] = $_SERVER["REMOTE_ADDR"] and
+			$_SESSION["browser2"] = $_SERVER["HTTP_ACCEPT"]){
+	echo "\n Session hijacked<br>";
+	die();
+	}
+?>

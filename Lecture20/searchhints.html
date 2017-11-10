@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html lang="en" class="gr__isslab-udayton_github_io"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>
+function startTime() {
+    document.getElementById('clock').innerHTML = new Date();
+    setTimeout(startTime, 500);
+}
+function displayHints(str){
+	if((str == null)|| (str == "") || (str.length==0)){
+		document.getElementById('hints').innerHTML = "";
+		return;
+	}	
+console.log(str);
+
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function(){
+	//alert("ready state = "+ this.readyState + " status = "+this.status + "statusText = " + this.statusText );
+	if(this.readyState == 4 && this.status == 200){
+		//alert(xhttp.responseText);
+		document.getElementById('hints').innerHTML = xhttp.responseText;
+		document.getElementById('hints').style.border = "1px solid #AAA0B0";
+	}
+}
+xhttp.open("GET","hints.php?q=" +str, true);
+xhttp.send();
+
+}
+
+</script>
+
+</head><body onload="startTime()" >
+
+Current time: <div id="clock">Mon Jun 19 2017 15:19:25 GMT-0400 (Eastern Daylight Time)</div>
+<input type ="text" size = "30" onkeyup="displayHints(this.value)">
+<div id="hints"></div>
+
+</body></html>

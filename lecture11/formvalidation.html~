@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<body>
+<form name="myForm" action="/cgi-bin/Helloworld.cgi" onsubmit="return validateForm()" method="post">
+<p>Username:<input type="text" required pattern="\w+"name="username"></p>
+<p>Password:<input type="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"name="pwd1" on change = "form.pwd2.pattern=this.value;"></p>
+<p>Confirm Password:<!--input type=password" required pattern="(?=.*\d)(?=.*[A-Z]).{6,}" name="pwd2"></p-->
+<input title="Please enter the same password as above"type="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"name="pwd2" onchange="this.setCustomValidity(this.validity.patternMismatch? this.title:'');"></p>
+<input type="submit" value="Submit">
+</form>
+</body>
+</html>
+

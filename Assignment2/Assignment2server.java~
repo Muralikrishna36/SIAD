@@ -1,0 +1,60 @@
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Date;
+public class Assignment2server{
+
+public static void main(String[] args) throws IOException{
+   	System.out.println("myserver5");
+	int portNumber=8000;
+	ServerSocket serverSocket = new ServerSocket(portNumber);// creating a server socket with specified port number
+	System.out.println("Assignment2server is running at port" + serverSocket.getLocalPort());// returns the port number to which server socket is listening and print it.
+
+while(true){
+	Socket clientSocket = serverSocket.accept();// accept method waits for connection request from client and accepts it.
+	System.out.println("A client is connected from IP:" + clientSocket.getInetAddress().getHostAddress());//getInetAddress returns local address of server to which socket is connected and getHostAddress returns ip address in srting format 
+	new TCPServerThread(clientSocket).start();
+	}
+    }
+}
+class TCPServerThread extends Thread{
+
+private Socket clientSocket = null;
+
+TCPServerThread(Socket clientSocket){
+   super("TCPServerThread");// for calling parent class
+   this.clientSocket=clientSocket;
+}
+
+public void run(){
+
+try{                       
+	BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));//will buffer the input from from a character-input stream /specified socket/file
+	String inputLine = in.readLine();// to read streams from console input
+	String receivedData = inputLine;
+
+while(true){
+	inputLine = in.readLine();
+	receivedData += inputLine + "\n";
+
+if(receivedData= "JOIN"){
+System.out.println("Client has joined the chat");
+}
+else(receivedData="EXIT"){
+System.out.println("client has Terminated");
+}
+if(receivedData!= null)
+{
+System.out.println("Data received from client: %s " + receivedData);
+}
+//String response = "myserver/n" + (new Date()).toString() + "\n" + "You have sent:" + receivedData ;
+
+clientSocket.getOutputStream().write(response.getBytes("UTF-8"));
+
+ 	//clientSocket.close();
+}
+
+   	 }catch(Exception e){
+       }
+     }
+ }

@@ -1,0 +1,24 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main(void){
+
+printf("content-Type: text/plain; charset=utf-8\n\n");
+
+char username[100];
+char password[100];
+
+char *data = getenv("QUERY_STRING");
+sscanf(data,“name=%[^&]&password=%s”,username, password);
+printf("username: %s \n",username);
+printf("password: %s \n",password);
+
+if(username[0]=='\0'||password[0]=='\0')
+{
+printf("Enter username and password");
+}
+else{
+printf("hello world!\n\n");
+}
+
+return 0;
+}

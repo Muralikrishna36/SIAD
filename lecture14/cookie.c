@@ -1,0 +1,10 @@
+#include<stdio.h> 
+int main(void)
+{
+printf("Content-Type: text/html\n");
+printf("Set-Cookie:username=php\n\n");
+char *cookie =getenv("HTTP_COOKIE");
+printf("Hello world\n");
+return 0;
+}
+
